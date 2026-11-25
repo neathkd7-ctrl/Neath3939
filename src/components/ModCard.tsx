@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Download, Box } from 'lucide-react';
 import type { ModItem } from '../types';
-import { formatBytes, formatNumber } from '../types';
+import { formatBytes, formatNumber, resolveAssetUrl } from '../types';
 
 interface ModCardProps {
   mod: ModItem;
@@ -29,7 +29,7 @@ export function ModCard({ mod, onSelect, onCreatorClick }: ModCardProps) {
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#111115]">
         {!imgError && mod.image_url ? (
           <img
-            src={mod.image_url}
+            src={resolveAssetUrl(mod.image_url)}
             alt={mod.title}
             referrerPolicy="no-referrer"
             onError={() => setImgError(true)}

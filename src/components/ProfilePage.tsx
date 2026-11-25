@@ -10,7 +10,7 @@ import {
   Box,
 } from 'lucide-react';
 import type { ModItem, PublicProfile } from '../types';
-import { formatBytes, formatDate, formatNumber } from '../types';
+import { formatBytes, formatDate, formatNumber, resolveAssetUrl } from '../types';
 import { deleteMod, fetchMyMods, fetchPublicProfile, updateProfile } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import { ModCard } from './ModCard';
@@ -179,7 +179,7 @@ export function ProfilePage({
               <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#2A2A34] bg-[#0E0E11]">
                 {profile.avatar_url ? (
                   <img
-                    src={profile.avatar_url}
+                    src={resolveAssetUrl(profile.avatar_url)}
                     alt={profile.username}
                     referrerPolicy="no-referrer"
                     className="h-full w-full object-cover"
@@ -316,7 +316,7 @@ export function ProfilePage({
                     className="flex items-center gap-4 min-w-0 cursor-pointer"
                   >
                     <img
-                      src={mod.image_url}
+                      src={resolveAssetUrl(mod.image_url)}
                       alt={mod.title}
                       referrerPolicy="no-referrer"
                       className="h-16 w-16 shrink-0 rounded-lg border border-[#2A2A34] object-cover bg-[#111115]"

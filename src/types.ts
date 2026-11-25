@@ -109,3 +109,64 @@ export function formatDate(iso: string): string {
     day: 'numeric',
   });
 }
+
+export function resolveAssetUrl(url: string | null | undefined): string {
+  if (!url) return '';
+  if (url.startsWith('/src/assets/')) {
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    return `${base}${url}`;
+  }
+  return url;
+}
+
+export const DEFAULT_CATEGORIES: Category[] = [
+  {
+    id: 'cat_addons',
+    name: 'Addons & Behaviors',
+    slug: 'addons-behaviors',
+    description: 'Custom Bedrock entities, items, recipes, and Script API behaviors (.mcaddon)',
+    sort_order: 1,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+  {
+    id: 'cat_textures',
+    name: 'Texture Packs',
+    slug: 'texture-packs',
+    description: 'High-resolution Bedrock resource packs, UI overhauls, and PBR materials (.mcpack)',
+    sort_order: 2,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+  {
+    id: 'cat_shaders',
+    name: 'Shaders & Visuals',
+    slug: 'shaders-visuals',
+    description: 'Deferred Technical Preview and RenderDragon lighting enhancers',
+    sort_order: 3,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+  {
+    id: 'cat_worlds',
+    name: 'Worlds & Maps',
+    slug: 'worlds-maps',
+    description: 'Survival spawns, adventure maps, skyblock islands, and mini-games (.mcworld)',
+    sort_order: 4,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+  {
+    id: 'cat_redstone',
+    name: 'Redstone & Tech',
+    slug: 'redstone-tech',
+    description: 'Automated machinery, copper contraptions, and industrial Bedrock addons',
+    sort_order: 5,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+  {
+    id: 'cat_skins',
+    name: 'Skins & Cosmetics',
+    slug: 'skins-cosmetics',
+    description: 'Custom character skin packs, capes, and wolf armor cosmetics',
+    sort_order: 6,
+    created_at: '2026-11-24T00:00:00.000Z',
+  },
+];
+

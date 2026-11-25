@@ -13,7 +13,7 @@ import { ProfilePage } from './components/ProfilePage';
 import { AdminDashboardPage } from './components/AdminDashboardPage';
 import { AuthModal } from './components/AuthModal';
 import { fetchCategories, fetchMods } from './lib/api';
-import type { Category, ModItem } from './types';
+import { DEFAULT_CATEGORIES, type Category, type ModItem } from './types';
 
 function getInitialRoute(): AppRoute {
   if (typeof window !== 'undefined') {
@@ -29,7 +29,7 @@ function getInitialRoute(): AppRoute {
 function DogModsShell() {
   const [route, setRoute] = useState<AppRoute>(getInitialRoute);
   const [mods, setMods] = useState<ModItem[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<string>('');
 
@@ -38,9 +38,11 @@ function DogModsShell() {
     try {
       const [modsRes, catRes] = await Promise.all([fetchMods(), fetchCategories()]);
       setMods(modsRes.mods);
-      setCategories(catRes.categories);
+      if (catRes.categories.length > 0) {
+        setCategories(catRes.categories);
+      }
     } catch {
-      // Errors handled gracefully per view
+      setCategories((prev) => (prev.length > 0 ? prev : DEFAULT_CATEGORIES));
     } finally {
       setLoading(false);
     }
@@ -60,8 +62,9 @@ function DogModsShell() {
   function navigate(next: AppRoute) {
     setRoute(next);
     if (typeof window !== 'undefined') {
+      const base = import.meta.env.BASE_URL || '/';
       const nextUrl =
-        next.page === 'mod' ? `/?mod=${encodeURIComponent(next.modId)}` : '/';
+        next.page === 'mod' ? `${base}?mod=${encodeURIComponent(next.modId)}` : base;
       window.history.replaceState(null, '', nextUrl);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });

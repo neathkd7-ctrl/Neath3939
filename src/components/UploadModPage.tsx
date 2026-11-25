@@ -14,6 +14,7 @@ import {
   MAX_IMAGE_BYTES,
   MAX_MOD_BYTES,
   formatBytes,
+  resolveAssetUrl,
 } from '../types';
 import { fetchModById, uploadModWithProgress } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
@@ -76,7 +77,7 @@ export function UploadModPage({
         setCategoryId(m.category_id);
         setMcVersion(m.mc_version);
         setCreatorName(m.creator_name);
-        setImagePreview(m.image_url);
+        setImagePreview(resolveAssetUrl(m.image_url));
       })
       .catch((err) => {
         if (active) setError(err instanceof Error ? err.message : 'Failed to load mod for editing.');

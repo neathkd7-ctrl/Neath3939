@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Search, Upload, ArrowRight, Flame, Clock, RotateCcw } from 'lucide-react';
 import type { Category, ModItem } from '../types';
-import { BEDROCK_VERSIONS, formatNumber } from '../types';
+import { BEDROCK_VERSIONS, formatNumber, resolveAssetUrl } from '../types';
 import { ModCard } from './ModCard';
 
 interface HomePageProps {
@@ -144,7 +144,7 @@ export function HomePage({
                 className="group relative h-64 overflow-hidden rounded-xl border border-[#2A2A34] bg-[#16161B] sm:h-80 lg:h-full lg:min-h-[320px] cursor-pointer"
               >
                 <img
-                  src="/src/assets/images/hero_bedrock_showcase_1795564651886.jpg"
+                  src={resolveAssetUrl('/src/assets/images/hero_bedrock_showcase_1795564651886.jpg')}
                   alt="DOG MODS Featured Minecraft Bedrock Showcase"
                   referrerPolicy="no-referrer"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"

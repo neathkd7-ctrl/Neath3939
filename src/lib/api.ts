@@ -8,6 +8,8 @@ import type {
   User,
 } from '../types';
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
 async function apiRequest<T>(
   path: string,
   options: RequestInit = {},
@@ -21,7 +23,7 @@ async function apiRequest<T>(
     headers.set('Content-Type', 'application/json');
   }
 
-  const res = await fetch(path, {
+  const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers,
   });
@@ -67,7 +69,7 @@ export function uploadModWithProgress(
 ): Promise<{ mod: ModItem }> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
+    xhr.open(method, `${API_BASE}${url}`, true);
     if (token) {
       xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     }
@@ -111,7 +113,9 @@ export async function downloadModFile(
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-  const res = await fetch(`/api/mods/${encodeURIComponent(mod.id)}/download`, { headers });
+  const res = await fetch(`${API_BASE}/api/mods/${encodeURIComponent(mod.id)}/download`, {
+    headers,
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || 'Failed to download mod file.');

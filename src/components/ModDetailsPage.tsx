@@ -18,7 +18,7 @@ import {
   X,
 } from 'lucide-react';
 import type { ModItem } from '../types';
-import { formatBytes, formatDate, formatNumber } from '../types';
+import { formatBytes, formatDate, formatNumber, resolveAssetUrl } from '../types';
 import { deleteMod, downloadModFile, fetchModById } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -97,7 +97,8 @@ export function ModDetailsPage({
 
   function getShareUrl(): string {
     if (typeof window === 'undefined' || !mod) return '';
-    return `${window.location.origin}/?mod=${encodeURIComponent(mod.id)}`;
+    const base = import.meta.env.BASE_URL || '/';
+    return `${window.location.origin}${base}?mod=${encodeURIComponent(mod.id)}`;
   }
 
   async function copyToClipboard(text: string, type: 'link' | 'discord') {
@@ -205,7 +206,7 @@ export function ModDetailsPage({
             <div className="aspect-square max-h-[460px] w-full overflow-hidden bg-[#111115]">
               {!imgError && mod.image_url ? (
                 <img
-                  src={mod.image_url}
+                  src={resolveAssetUrl(mod.image_url)}
                   alt={mod.title}
                   referrerPolicy="no-referrer"
                   onError={() => setImgError(true)}

@@ -14,7 +14,7 @@ import {
   Check,
 } from 'lucide-react';
 import type { AdminOverviewStats, AdminUserItem, Category, ModItem } from '../types';
-import { formatBytes, formatDate, formatNumber } from '../types';
+import { formatBytes, formatDate, formatNumber, resolveAssetUrl } from '../types';
 import {
   adminDeleteAllMods,
   adminDeleteMod,
@@ -577,7 +577,7 @@ export function AdminDashboardPage({
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <img
-                            src={mod.image_url}
+                            src={resolveAssetUrl(mod.image_url)}
                             alt={mod.title}
                             referrerPolicy="no-referrer"
                             className="h-11 w-11 shrink-0 rounded-lg border border-[#2A2A34] object-cover bg-[#0E0E11]"

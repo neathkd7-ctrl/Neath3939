@@ -1166,6 +1166,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distDir = path.resolve(process.cwd(), 'dist');
+    app.use('/Neath3939', express.static(distDir));
     app.use(express.static(distDir));
     app.get('*', (req, res, next) => {
       if (req.path.startsWith('/api/')) {
