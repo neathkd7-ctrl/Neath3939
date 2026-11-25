@@ -1,0 +1,6 @@
+{
+  "name": "DOG MODS",
+  "description": "CurseForge-inspired Minecraft Bedrock Edition mod-sharing platform with real file uploads, creator profiles, and admin moderation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
